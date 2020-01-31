@@ -3,13 +3,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WEBParser {
-/*
-    Map<Integer,String> map = new HashMap<>();*/
+
 
 
     public void parse() throws IOException {
         BufferedReader bufferedReader
-                =new BufferedReader( new InputStreamReader( "C:\\Users\\admin\\Desktop\\Jobs.txt" ));
+                =new BufferedReader( new InputStreamReader(new InputStream() {
+            @Override
+            public int read() throws IOException {
+                return 0;
+            }
+        }));
 
        try{
 
