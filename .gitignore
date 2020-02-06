@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/*
+*.iml
+target/*
+resources/Plan.iml
+.idea
+.idea/dbnavigator.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/vcs.xml
