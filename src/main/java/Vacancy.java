@@ -1,10 +1,7 @@
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
 
-
-public class Occupation extends Skills {
+class Vacancy extends Skills {
 
     private int ID;
     private int salary;
@@ -16,7 +13,7 @@ public class Occupation extends Skills {
 
     private LocalDate date;
 
-    public Occupation(int ID, int salary, int expirience, String company, String city, String URL) {
+    public Vacancy(int ID, int salary, int expirience, String company, String city, String URL) {
         this.ID = ID;
         this.company = company;
         this.salary = salary;

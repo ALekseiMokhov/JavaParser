@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
 class WEBParser {
     private static String URL;
+    private static String USER_AGENT;
     final Properties properties = new Properties();
     InputStream inputStream = null;
 
@@ -43,36 +45,51 @@ class WEBParser {
                     .get();
             doc.outputSettings().outline(true);
 
-    Elements resumeEl = doc.select("div.resume-search-item__name");
-    for (Element e: resumeEl){
-     System.out.println(e.text());
-     System.out.println("______________________");
-    }
-    Elements salaryEl = doc.select("div.vacancy-serp-item__compensation");
-    for (Element e: salaryEl){
-     System.out.println(e.text());
-     System.out.println("______________________");
+            Elements link = doc.select("a[href*=/vacancy/][href$=%20junior]");
 
-    }
+            for (Element e : link) {
+                String linkText = e.attr("abs:href");
+                System.out.println(linkText);
+                deepWork(linkText);
+            }
 
-/*    Elements reqEl = doc.select("a[href]");
-    for (Element e: reqEl){
-     System.out.println(e.text());
-     System.out.println("______________________");
-    }
-    Elements addressEl = doc.select("div.vacancy-serp__vacancy-address");
-    for (Element e: addressEl){
-     System.out.println(e.text());
-     System.out.println("______________________");
-    }
-    Elements urlEl = doc.select("div.vacancy-serp-item__link-overlay HH-LinkModifier");
-    for (Element e: urlEl){
-     System.out.println(e.text());
-     System.out.println("______________________");
-    }*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void deepWork(String url) {
+        try {
+            Document document = Jsoup.connect(url).
+                    userAgent("Chrome/4.0.249.0 ")
+                    .referrer("http://www.google.com")
+                    .get();
+            document.outputSettings().outline(true);
+
+            Elements eSalary = document.select("p[class='vacancy-salary']");
+            for (Element e : eSalary) {
+                String string = e.text();
+                System.out.println(string);
+            }
+            Elements eCity = document.select("p[data-qa='vacancy-view-location']");
+            for (Element e : eCity) {
+                String string = HTML_Filter.filterLocation(e.text());
+                System.out.println(string);
+            }
+            Elements eExp = document.select("[data-qa='vacancy-experience']");
+            for (Element e : eExp) {
+                String string = e.text();
+                System.out.println(string);
+            }
+            Elements eDescription = document.select("div[data-qa='vacancy-description']");
+            for (Element e : eDescription) {
+                String string = HTML_Filter.filterRequirements(e.text());
+                System.out.println(string);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
