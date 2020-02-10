@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class MainParser {
 
     public static void main(String[] args) {
-      parse();
+     read();
     }
     public static void parse(){
         WebParser webparser = new WebParser();

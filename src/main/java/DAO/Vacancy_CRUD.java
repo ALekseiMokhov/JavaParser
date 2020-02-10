@@ -211,16 +211,15 @@ public class Vacancy_CRUD extends DaoFactory {
     }
     public void mapVacancy(Vacancy vacancy){
         try {
-
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
             statement=connection.
-                    prepareStatement("INSERT INTO vacancies VALUES(?,?,?,?,?,?,?)");
-            statement.setInt(1,2);
-            statement.setInt(2,vacancy.getSalary());
-            statement.setInt(3,vacancy.getExperience());
-            statement.setString(4,vacancy.getCompany());
-            statement.setString(5,vacancy.getCity());
-            statement.setString(6,vacancy.getURL());
-            statement.setDate(7,vacancy.getDate());
+                    prepareStatement("INSERT INTO vacancies VALUES(default,?,?,?,?,?,?)");
+            statement.setInt(1,vacancy.getSalary());
+            statement.setInt(2,vacancy.getExperience());
+            statement.setString(3,vacancy.getCompany());
+            statement.setString(4,vacancy.getCity());
+            statement.setString(5,vacancy.getURL());
+            statement.setDate(6,vacancy.getDate());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
