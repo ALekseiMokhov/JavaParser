@@ -10,7 +10,7 @@ public class Vacancy {
     private int ID;
     private String city;
     private String company;
-    private int expirience;
+    private int experience;
     private Date date;
     private int salary;
     private String URL;
@@ -41,15 +41,19 @@ public class Vacancy {
 
     }
 
+    public Vacancy() {
+        this.ID = 0;
+        this.date=Date.valueOf(LocalDate.now());
+    }
 
-    public Vacancy(int salary, int expirience, String company, String city, String URL) {
+    public Vacancy(int salary, int experience, String company, String city, String URL) {
         this.ID = 0;
         this.company = company;
         this.salary = salary;
         this.city = city;
         this.date = Date.valueOf(LocalDate.now());
         this.URL = URL;
-        this.expirience = expirience;
+        this.experience = experience;
     }
 
     public int getID() {
@@ -60,8 +64,8 @@ public class Vacancy {
         return company;
     }
 
-    public int getExpirience() {
-        return expirience;
+    public int getExperience() {
+        return experience;
     }
 
     public String getCity() {
@@ -84,8 +88,8 @@ public class Vacancy {
         this.salary = salary;
     }
 
-    public void setExpirience(int expirience) {
-        this.expirience = expirience;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
     public void setCompany(String company) {
@@ -111,5 +115,18 @@ public class Vacancy {
 
     public static HashMap<String, Boolean> getSkillsRequired() {
         return SKILLS_REQUIRED;
+    }
+
+    @Override
+    public String toString() {
+        return "Vacancy{" +
+                "ID=" + ID +
+                ", city='" + city + '\'' +
+                ", company='" + company + '\'' +
+                ", expirience=" + experience +
+                ", date=" + date +
+                ", salary=" + salary +
+                ", URL='" + URL + '\'' +
+                '}';
     }
 }

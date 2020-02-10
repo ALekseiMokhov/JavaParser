@@ -3,6 +3,7 @@ import MAIN.Vacancy;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,17 @@ final class HTML_Filter {
             return parsingString.replaceAll("[^0-9]", "").substring(0,1);
         }
         return "0";
+    }
+    static String filterSalary(String parsingString){
+        if(parsingString.matches(".*\\d.*")){
+            Matcher matcher = Pattern.compile("\\d+").matcher(parsingString);
+            matcher.find();
+            String res = matcher.group();
+            return res;
+
+        }
+
+        return"0";
     }
 
     static String filterRequirements(String parsingString){

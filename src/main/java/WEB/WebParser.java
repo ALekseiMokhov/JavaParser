@@ -1,5 +1,7 @@
 package WEB;
 
+import MAIN.MainParser;
+import MAIN.Vacancy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,12 +11,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 
 public class WebParser {
     private static String URL;
-    private static String USER_AGENT;/*?*/
+    private static final List<Vacancy>VACANCY_LIST =new ArrayList<>();
     final Properties properties = new Properties();
     InputStream inputStream = null;
 
@@ -55,13 +60,15 @@ public class WebParser {
                 deepWork(linkText);
             }
 
-
+            MainParser.loadVacancies(VACANCY_LIST);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void deepWork(String url) {
+        Vacancy vacancy=new Vacancy();
+        vacancy.setURL(url);
         try {
             Document document = Jsoup.connect(url).
                     userAgent("Chrome/4.0.249.0 ")
@@ -72,30 +79,39 @@ public class WebParser {
             Elements eCompany = document.select("a[class='vacancy-company-name']");
             for (Element e : eCompany) {
                 String string = e.text();
+                vacancy.setCompany(string);
                 System.out.println(string);
             }
 
-            Elements eSalary = document.select("p[class='vacancy-salary']");
-            for (Element e : eSalary) {
-                String string = e.text();
-                System.out.println(string);
-            }
             Elements eCity = document.select("p[data-qa='vacancy-view-location']");
             for (Element e : eCity) {
                 String string = HTML_Filter.filterLocation(e.text());
+                vacancy.setCity(string);
                 System.out.println(string);
             }
             Elements eExp = document.select("[data-qa='vacancy-experience']");
             for (Element e : eExp) {
                 String string = HTML_Filter.filterExpirience(e.text());
+                vacancy.setExperience(Integer.valueOf(string));
+                System.out.println(string);
+            }
+
+            Elements eSalary = document.select("p[class='vacancy-salary']");
+            for (Element e : eSalary) {
+                String string = HTML_Filter.filterSalary(e.text());
+                vacancy.setSalary(Integer.parseInt(string));
                 System.out.println(string);
             }
             Elements eDescription = document.select("div[data-qa='vacancy-description']");
             for (Element e : eDescription) {
                 String string = HTML_Filter.filterRequirements(e.text());
+                List<String>listOfSkills= Arrays.asList(string.split(","));
+                vacancy.setSkillsRequired(listOfSkills);
                 System.out.println(string);
 
             }
+            VACANCY_LIST.add(vacancy);
+            System.out.println(vacancy);
         } catch (IOException e) {
             e.printStackTrace();
         }
