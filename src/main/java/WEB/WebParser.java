@@ -1,3 +1,5 @@
+package WEB;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,9 +12,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-class WEBParser {
+public class WebParser {
     private static String URL;
-    private static String USER_AGENT;
+    private static String USER_AGENT;/*?*/
     final Properties properties = new Properties();
     InputStream inputStream = null;
 
@@ -67,6 +69,12 @@ class WEBParser {
                     .get();
             document.outputSettings().outline(true);
 
+            Elements eCompany = document.select("a[class='vacancy-company-name']");
+            for (Element e : eCompany) {
+                String string = e.text();
+                System.out.println(string);
+            }
+
             Elements eSalary = document.select("p[class='vacancy-salary']");
             for (Element e : eSalary) {
                 String string = e.text();
@@ -79,13 +87,14 @@ class WEBParser {
             }
             Elements eExp = document.select("[data-qa='vacancy-experience']");
             for (Element e : eExp) {
-                String string = e.text();
+                String string = HTML_Filter.filterExpirience(e.text());
                 System.out.println(string);
             }
             Elements eDescription = document.select("div[data-qa='vacancy-description']");
             for (Element e : eDescription) {
                 String string = HTML_Filter.filterRequirements(e.text());
                 System.out.println(string);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

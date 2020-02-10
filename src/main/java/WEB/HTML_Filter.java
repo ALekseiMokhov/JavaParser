@@ -1,3 +1,6 @@
+package WEB;
+import MAIN.Vacancy;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,10 +20,16 @@ final class HTML_Filter {
      }
      return "Required far relocation";
     }
+    static String filterExpirience(String parsingString) {
+        if(parsingString.matches(".*\\d.*")){
+            return parsingString.replaceAll("[^0-9]", "").substring(0,1);
+        }
+        return "0";
+    }
 
     static String filterRequirements(String parsingString){
         StringBuilder stringBuilder = new StringBuilder();
-        for (String string:Skills.SKILL_SET){
+        for (String string: Vacancy.getSkillsRequired().keySet()){
          Pattern pattern = Pattern.compile(string,Pattern.CASE_INSENSITIVE);
          Matcher matcher = pattern.matcher(parsingString);
          while (matcher.find()){
