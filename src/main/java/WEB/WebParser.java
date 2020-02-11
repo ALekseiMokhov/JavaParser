@@ -1,4 +1,5 @@
 package WEB;
+import DAO.Vacancy_CRUD;
 import MAIN.HHparser;
 import MAIN.Vacancy;
 import org.jsoup.Jsoup;
@@ -41,6 +42,12 @@ public class WebParser {
             }
         }
     }
+    public static void loadVacancies(List<Vacancy> list){
+        Vacancy_CRUD vacancie_persistance = new Vacancy_CRUD();
+        for (Vacancy vacancy : list) {
+            vacancie_persistance.mapVacancy(vacancy);
+        }
+    }
 
     public void work() {
         try {
@@ -57,7 +64,8 @@ public class WebParser {
                 deepWork(linkText);
             }
 
-            HHparser.loadVacancies(VACANCY_LIST);
+
+            loadVacancies(VACANCY_LIST);
         } catch (IOException e) {
             e.printStackTrace();
         }

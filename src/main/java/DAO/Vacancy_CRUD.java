@@ -214,6 +214,14 @@ public class Vacancy_CRUD extends DaoFactory {
     public void mapVacancy(Vacancy vacancy){
         try {
             connection = getConnection();
+       /*     int repeat_count=0;
+            statement=connection.prepareStatement("SELECT  COUNT(url) FROM vacancies where url = (?))" );
+            statement.setString(1,vacancy.getURL());
+            resultSet=statement.executeQuery();
+            while (resultSet.next()){
+                System.out.println(resultSet.next());
+
+            }*/
             statement=connection.
                     prepareStatement("INSERT INTO vacancies VALUES(default,?,?,?,?,?,?)");
             statement.setInt(1,vacancy.getSalary());
