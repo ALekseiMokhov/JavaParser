@@ -6,7 +6,7 @@ public class HHparser {
 @Desc(text = " parse() [& save data] from hh.ru, retrieve data by calling read();")
 
     public static void main(String[] args) {
-     parse();
+    read();
     }
     public static void parse(){
         WebParser webparser = new WebParser();
