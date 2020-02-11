@@ -3,7 +3,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-/*import org.apache.commons.lang.RandomStringUtils;*/
 
 public class Vacancy {
 

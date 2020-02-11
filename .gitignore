@@ -7,3 +7,6 @@ resources/Plan.iml
 .idea/dbnavigator.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/vcs.xml
+.class
+!/.gitignore
+!/src/main/resources/properties.config

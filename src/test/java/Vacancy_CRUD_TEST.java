@@ -11,11 +11,8 @@ import java.util.Properties;
 public class Vacancy_CRUD_TEST {
     private static String URL;
     private static String USER;
-    private static String DRIVER;
     private static  String PASSWORD;
     private static Properties PROPERTIES= new Properties();
-    private static String CREATE_DB_VACANCIES;
-    private static String CREATE_DB_SKILLS;
 
     Connection connection=null;
     PreparedStatement statement=null;
@@ -31,9 +28,9 @@ public class Vacancy_CRUD_TEST {
             USER = PROPERTIES.getProperty("DB_USER");
             PASSWORD = PROPERTIES.getProperty("DB_PASSWORD");
             URL=PROPERTIES.getProperty("DB_URL");
-            DRIVER=PROPERTIES.getProperty("DB_DRIVER");
-            CREATE_DB_VACANCIES=PROPERTIES.getProperty("CREATE_SQL");
-            CREATE_DB_SKILLS=PROPERTIES.getProperty("CREATE_SQL2");
+            String DRIVER = PROPERTIES.getProperty("DB_DRIVER");
+            String CREATE_DB_VACANCIES = PROPERTIES.getProperty("CREATE_SQL");
+            String CREATE_DB_SKILLS = PROPERTIES.getProperty("CREATE_SQL2");
             Class.forName(DRIVER);
             System.out.println(USER);
             System.out.println(PASSWORD);

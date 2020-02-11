@@ -1,12 +1,10 @@
 package WEB;
-
-import MAIN.MainParser;
+import MAIN.HHparser;
 import MAIN.Vacancy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,11 +54,10 @@ public class WebParser {
 
             for (Element e : link) {
                 String linkText = e.attr("abs:href");
-                System.out.println(linkText);
                 deepWork(linkText);
             }
 
-            MainParser.loadVacancies(VACANCY_LIST);
+            HHparser.loadVacancies(VACANCY_LIST);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,34 +77,30 @@ public class WebParser {
             for (Element e : eCompany) {
                 String string = e.text();
                 vacancy.setCompany(string);
-                System.out.println(string);
             }
 
             Elements eCity = document.select("p[data-qa='vacancy-view-location']");
             for (Element e : eCity) {
                 String string = HTML_Filter.filterLocation(e.text());
                 vacancy.setCity(string);
-                System.out.println(string);
             }
             Elements eExp = document.select("[data-qa='vacancy-experience']");
             for (Element e : eExp) {
                 String string = HTML_Filter.filterExpirience(e.text());
                 vacancy.setExperience(Integer.valueOf(string));
-                System.out.println(string);
             }
 
             Elements eSalary = document.select("p[class='vacancy-salary']");
             for (Element e : eSalary) {
                 String string = HTML_Filter.filterSalary(e.text());
                 vacancy.setSalary(Integer.parseInt(string));
-                System.out.println(string);
+
             }
             Elements eDescription = document.select("div[data-qa='vacancy-description']");
             for (Element e : eDescription) {
                 String string = HTML_Filter.filterRequirements(e.text());
                 List<String>listOfSkills= Arrays.asList(string.split(","));
                 vacancy.setSkillsRequired(listOfSkills);
-                System.out.println(string);
 
             }
             VACANCY_LIST.add(vacancy);

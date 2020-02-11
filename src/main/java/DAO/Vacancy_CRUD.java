@@ -1,7 +1,5 @@
 package DAO;
-
 import MAIN.Vacancy;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +12,6 @@ public class Vacancy_CRUD extends DaoFactory {
 
     private static String URL;
     private static String USER;
-    private static String DRIVER;
     private static String PASSWORD;
     private static Properties PROPERTIES= new Properties();
     private static String CREATE_DB_VACANCIES;
@@ -25,7 +22,6 @@ public class Vacancy_CRUD extends DaoFactory {
     ResultSet resultSet=null;
     InputStream is=null;
 
-
     {
         try {
             System.out.println("Trying to load props file..");
@@ -34,7 +30,7 @@ public class Vacancy_CRUD extends DaoFactory {
             USER = PROPERTIES.getProperty("DB_USER");
             PASSWORD = PROPERTIES.getProperty("DB_PASSWORD");
             URL=PROPERTIES.getProperty("DB_URL");
-            DRIVER=PROPERTIES.getProperty("DB_DRIVER");
+            String DRIVER = PROPERTIES.getProperty("DB_DRIVER");
             CREATE_DB_VACANCIES=PROPERTIES.getProperty("CREATE_SQL");
             CREATE_DB_SKILLS=PROPERTIES.getProperty("CREATE_SQL2");
             Class.forName(DRIVER);
@@ -57,16 +53,17 @@ public class Vacancy_CRUD extends DaoFactory {
             e.printStackTrace();
 
         }
-
     }
 
     @Override
     public void createTable() {
         try{
             connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            connection.setAutoCommit(false);
             statement=connection.prepareStatement(CREATE_DB_VACANCIES);
             statement=connection.prepareStatement(CREATE_DB_SKILLS);
             statement.execute();
+            connection.commit();
         } catch (SQLException e) {
             System.out.println("Failed to establish connection!");
             e.printStackTrace();
@@ -95,6 +92,7 @@ public class Vacancy_CRUD extends DaoFactory {
     public void getData() {
         try{
             connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            connection.setAutoCommit(false);
             statement=connection.prepareStatement("select*from vacancies");
             resultSet =statement.executeQuery();
             while(resultSet.next()){
@@ -110,6 +108,7 @@ public class Vacancy_CRUD extends DaoFactory {
                 System.out.println();
 
             }
+            connection.commit();
         } catch (SQLException e) {
             System.out.println("Failed to establish connection!");
             e.printStackTrace();
@@ -145,10 +144,12 @@ public class Vacancy_CRUD extends DaoFactory {
 
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement("select*from vacancies where salary >= "+salary);
             resultSet = statement.executeQuery();
             while(resultSet.next()){
                 System.out.println(resultSet.next());
+                connection.commit();
             }
         } catch (SQLException e) {
             System.out.println("Failed to establish connection!");
@@ -184,9 +185,11 @@ public class Vacancy_CRUD extends DaoFactory {
     public void deleteData(LocalDate date) {
         try {
             connection=DriverManager.getConnection(URL,USER,PASSWORD);
+            connection.setAutoCommit(false);
             statement=connection.
                     prepareStatement("delete from vacancies where"+date.toString() +" >= postingDate");
             statement.executeQuery();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -212,6 +215,7 @@ public class Vacancy_CRUD extends DaoFactory {
     public void mapVacancy(Vacancy vacancy){
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection.setAutoCommit(false);
             statement=connection.
                     prepareStatement("INSERT INTO vacancies VALUES(default,?,?,?,?,?,?)");
             statement.setInt(1,vacancy.getSalary());
@@ -221,8 +225,15 @@ public class Vacancy_CRUD extends DaoFactory {
             statement.setString(5,vacancy.getURL());
             statement.setDate(6,vacancy.getDate());
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Existing vacancie");
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
         finally {
             if(statement!=null) {

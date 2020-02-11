@@ -1,9 +1,7 @@
 package WEB;
 import MAIN.Vacancy;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +31,6 @@ final class HTML_Filter {
             matcher.find();
             String res = matcher.group();
             return res;
-
         }
 
         return"0";
