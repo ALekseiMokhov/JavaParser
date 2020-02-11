@@ -24,7 +24,6 @@ public class Vacancy_CRUD extends DaoFactory {
 
     {
         try {
-            System.out.println("Trying to load props file..");
             is = new FileInputStream("src/main/resources/properties.config");
             PROPERTIES.load(is);
             USER = PROPERTIES.getProperty("DB_USER");
@@ -34,8 +33,6 @@ public class Vacancy_CRUD extends DaoFactory {
             CREATE_DB_VACANCIES=PROPERTIES.getProperty("CREATE_SQL");
             CREATE_DB_SKILLS=PROPERTIES.getProperty("CREATE_SQL2");
             Class.forName(DRIVER);
-            System.out.println(USER);
-            System.out.println(PASSWORD);
             try{
                 is.close();
             }
@@ -54,12 +51,17 @@ public class Vacancy_CRUD extends DaoFactory {
 
         }
     }
+    private static Connection getConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+        connection.setAutoCommit(false);
+            return connection;
+
+    }
 
     @Override
     public void createTable() {
         try{
-            connection=DriverManager.getConnection(URL,USER,PASSWORD);
-            connection.setAutoCommit(false);
+            connection=getConnection();
             statement=connection.prepareStatement(CREATE_DB_VACANCIES);
             statement=connection.prepareStatement(CREATE_DB_SKILLS);
             statement.execute();
@@ -91,8 +93,7 @@ public class Vacancy_CRUD extends DaoFactory {
     @Override
     public void getData() {
         try{
-            connection=DriverManager.getConnection(URL,USER,PASSWORD);
-            connection.setAutoCommit(false);
+            connection=getConnection();
             statement=connection.prepareStatement("select*from vacancies");
             resultSet =statement.executeQuery();
             while(resultSet.next()){
@@ -143,8 +144,7 @@ public class Vacancy_CRUD extends DaoFactory {
     public void getData(int salary) {
 
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            connection.setAutoCommit(false);
+            connection = getConnection();
             statement = connection.prepareStatement("select*from vacancies where salary >= "+salary);
             resultSet = statement.executeQuery();
             while(resultSet.next()){
@@ -184,8 +184,7 @@ public class Vacancy_CRUD extends DaoFactory {
     @Override
     public void deleteData(LocalDate date) {
         try {
-            connection=DriverManager.getConnection(URL,USER,PASSWORD);
-            connection.setAutoCommit(false);
+            connection=getConnection();
             statement=connection.
                     prepareStatement("delete from vacancies where"+date.toString() +" >= postingDate");
             statement.executeQuery();
@@ -214,8 +213,7 @@ public class Vacancy_CRUD extends DaoFactory {
     }
     public void mapVacancy(Vacancy vacancy){
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            connection.setAutoCommit(false);
+            connection = getConnection();
             statement=connection.
                     prepareStatement("INSERT INTO vacancies VALUES(default,?,?,?,?,?,?)");
             statement.setInt(1,vacancy.getSalary());
