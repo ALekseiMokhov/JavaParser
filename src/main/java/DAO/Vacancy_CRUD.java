@@ -8,7 +8,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.Properties;
 
-public class Vacancy_CRUD extends DaoFactory {
+public class Vacancy_CRUD implements DaoFactory {
 
     private static String URL;
     private static String USER;
@@ -51,7 +51,7 @@ public class Vacancy_CRUD extends DaoFactory {
 
         }
     }
-    private static Connection getConnection() throws SQLException {
+    protected static Connection getConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
         connection.setAutoCommit(false);
             return connection;
@@ -186,7 +186,7 @@ public class Vacancy_CRUD extends DaoFactory {
         try {
             connection=getConnection();
             statement=connection.
-                    prepareStatement("delete from vacancies where"+date.toString() +" >= postingDate");
+                    prepareStatement("delete from vacancies where"+date +" -postingDate >3");
             statement.executeQuery();
             connection.commit();
         } catch (SQLException e) {
