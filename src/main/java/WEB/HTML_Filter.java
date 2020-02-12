@@ -12,6 +12,10 @@ final class HTML_Filter {
             "Химки","Воронеж","Тула","Екатеринбург",
             "Орел", "Брянск","Белгород","Минск",
             "Курск"});
+    private final static List<String> SKILLS = Arrays.asList(new String[]{
+            "HIBERNATE","SPRING","JAVA 8","EJB","GENERICS","SQL","NOSQL","AJAX","CSS","HTML",
+            "JUNIT","LOG4J","ORACLE","POSTGRES","MONGODB","CASSANDRA","CORE","UI"
+    });
 
     static String filterLocation(String parsingString) {
      for(String  string: CITIES){
@@ -38,7 +42,7 @@ final class HTML_Filter {
 
     static String filterRequirements(String parsingString){
         StringBuilder stringBuilder = new StringBuilder();
-        for (String string: Vacancy.getSkillsRequired().keySet()){
+        for (String string: SKILLS){
          Pattern pattern = Pattern.compile(string,Pattern.CASE_INSENSITIVE);
          Matcher matcher = pattern.matcher(parsingString);
          while (matcher.find()){

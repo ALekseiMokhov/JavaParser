@@ -1,6 +1,6 @@
 package WEB;
+import DAO.Skills_CRUD;
 import DAO.Vacancy_CRUD;
-import MAIN.HHparser;
 import MAIN.Vacancy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +19,7 @@ import java.util.Properties;
 public class WebParser {
     private static String URL;
     private static final List<Vacancy>VACANCY_LIST =new ArrayList<>();
+   /* private static final List<String>SKILLS_LIST=new ArrayList<>();*/
     final Properties properties = new Properties();
     InputStream inputStream = null;
 
@@ -45,7 +46,8 @@ public class WebParser {
     public static void loadVacancies(List<Vacancy> list){
         Vacancy_CRUD vacancie_persistance = new Vacancy_CRUD();
         for (Vacancy vacancy : list) {
-            vacancie_persistance.mapVacancy(vacancy);
+            vacancie_persistance.persistData(vacancy);
+
         }
     }
 

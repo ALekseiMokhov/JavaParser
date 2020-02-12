@@ -2,6 +2,7 @@ package MAIN;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Vacancy {
@@ -14,12 +15,11 @@ public class Vacancy {
     private int salary;
     private String URL;
 
-
-    private static HashMap<String,Boolean> SKILLS_REQUIRED =new HashMap<>();
-        static {
+    private LinkedHashMap<String,Boolean> SKILLS_REQUIRED =new LinkedHashMap<>();
+         {
         SKILLS_REQUIRED.put("HIBERNATE",false);
         SKILLS_REQUIRED.put("SPRING",false);
-        SKILLS_REQUIRED.put("JAVA8",false);
+        SKILLS_REQUIRED.put("JAVA 8",false);
         SKILLS_REQUIRED.put("GENERICS",false);
         SKILLS_REQUIRED.put("SQL",false);
         SKILLS_REQUIRED.put("NOSQL",false);
@@ -34,9 +34,7 @@ public class Vacancy {
         SKILLS_REQUIRED.put("POSTGRES",false);
         SKILLS_REQUIRED.put("MONGODB",false);
         SKILLS_REQUIRED.put("CASSANDRA",false);
-        SKILLS_REQUIRED.put("ООП",false);
-        SKILLS_REQUIRED.put("JAVA CORE",false);
-        SKILLS_REQUIRED.put("ТЕСТ",false);
+        SKILLS_REQUIRED.put("CORE",false);
 
     }
 
@@ -112,7 +110,7 @@ public class Vacancy {
 
     }
 
-    public static HashMap<String, Boolean> getSkillsRequired() {
+    public HashMap<String, Boolean> getSkillsRequired() {
         return SKILLS_REQUIRED;
     }
 

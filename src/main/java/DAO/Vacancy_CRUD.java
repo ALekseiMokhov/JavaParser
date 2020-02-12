@@ -1,69 +1,15 @@
 package DAO;
 import MAIN.Vacancy;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Properties;
+public class Vacancy_CRUD extends DaoFactory {
 
-public class Vacancy_CRUD implements DaoFactory {
-
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
-    private static Properties PROPERTIES= new Properties();
-    private static String CREATE_DB_VACANCIES;
-    private static String CREATE_DB_SKILLS;
-
-    Connection connection=null;
-    PreparedStatement statement=null;
-    ResultSet resultSet=null;
-    InputStream is=null;
-
-    {
-        try {
-            is = new FileInputStream("src/main/resources/properties.config");
-            PROPERTIES.load(is);
-            USER = PROPERTIES.getProperty("DB_USER");
-            PASSWORD = PROPERTIES.getProperty("DB_PASSWORD");
-            URL=PROPERTIES.getProperty("DB_URL");
-            String DRIVER = PROPERTIES.getProperty("DB_DRIVER");
-            CREATE_DB_VACANCIES=PROPERTIES.getProperty("CREATE_SQL");
-            CREATE_DB_SKILLS=PROPERTIES.getProperty("CREATE_SQL2");
-            Class.forName(DRIVER);
-            try{
-                is.close();
-            }
-            catch(IOException e){
-                System.out.println("Can't close inputstream!");
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File properties.config hasn't been found! ");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Properties can't find your data!");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-        }
-    }
-    protected static Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
-        connection.setAutoCommit(false);
-            return connection;
-
-    }
 
     @Override
     public void createTable() {
         try{
             connection=getConnection();
             statement=connection.prepareStatement(CREATE_DB_VACANCIES);
-            statement=connection.prepareStatement(CREATE_DB_SKILLS);
             statement.execute();
             connection.commit();
         } catch (SQLException e) {
@@ -100,7 +46,7 @@ public class Vacancy_CRUD implements DaoFactory {
                 System.out.print("{");
                 System.out.print("ID: "+ resultSet.getInt(1)+ " ;");
                 System.out.print(" Salary: "+ resultSet.getInt(2)+ " ;");
-                System.out.print(" Expirience: "+resultSet.getString(3)+ " ;");
+                System.out.print(" Experience: "+resultSet.getString(3)+ " ;");
                 System.out.print(" Company : "+resultSet.getString(4)+ " ;");
                 System.out.print(" City: "+resultSet.getString(5)+ " ;");
                 System.out.print(" URL: "+resultSet.getString(6)+ " ;");
@@ -211,7 +157,8 @@ public class Vacancy_CRUD implements DaoFactory {
         }
 
     }
-    public void mapVacancy(Vacancy vacancy){
+
+    public void persistData(Vacancy vacancy){
         try {
             connection = getConnection();
             statement=connection.
@@ -224,10 +171,29 @@ public class Vacancy_CRUD implements DaoFactory {
             statement.setString(5,vacancy.getURL());
             statement.setDate(6,vacancy.getDate());
             statement.executeUpdate();
+            
+            statement=connection.prepareStatement("select * from skills limit 1");
+            resultSet = statement.executeQuery();
+
+            statement=connection.prepareStatement("INSERT INTO skills values(" +
+                    "default,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
+            int countColumn = resultSetMetaData.getColumnCount();
+            for (int i = 2; i <= countColumn; i++ ) {
+                String name = resultSetMetaData.getColumnName(i);
+                if (vacancy.getSkillsRequired().get(name) == true) {
+                    statement.setBoolean(i, true);
+                } else {
+                    statement.setBoolean(i, false);
+                }
+            }
             connection.commit();
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Existing vacancie");
+            System.out.println("Existing vacancy");
             try {
                 connection.rollback();
             } catch (SQLException ex) {
