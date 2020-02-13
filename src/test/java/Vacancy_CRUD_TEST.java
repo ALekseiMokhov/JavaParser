@@ -19,7 +19,7 @@ public class Vacancy_CRUD_TEST {
     ResultSet resultSet=null;
     InputStream is=null;
 
-
+    // FIXME cм комменты в пакете DAO
     {
         try {
             System.out.println("Trying to load props file..");
@@ -56,6 +56,8 @@ public class Vacancy_CRUD_TEST {
     @Test
     public void mapVacancyTest(Vacancy vacancy){
         try {
+            // FIXME лезем в настоящую бд, с которой работает наш парсер - это недопустимо ни в коем случае
+            // FIXME cм комменты в пакете DAO
             connection= DriverManager.getConnection(URL,USER,PASSWORD);
             statement=connection.
                     prepareStatement("INSERT INTO vacancies VALUES(?,?,?,?,?,?)");

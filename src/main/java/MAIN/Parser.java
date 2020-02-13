@@ -20,8 +20,10 @@ public class Parser {
     final Properties properties = new Properties();
     InputStream inputStream = null;
 
+    // FIXME более привычно видеть такое в кончтрукторе + спрятать в метод типа loadConfig()
     {
-        try {
+        try { // FIXME лучше использовать try-with-resources
+//            FIXME читаем этот же файл в 3 местах => лучше иметь отедльный класс, который нам загрузит конфиг
             inputStream = new FileInputStream("src/main/resources/properties.config");
             properties.load(inputStream);
             URL = properties.getProperty("PAGE1");
@@ -48,10 +50,12 @@ public class Parser {
         }
     }
 
+    // FIXME слишком общее имя, напр. parseVacancies() выглядит понятнее
     public void work() {
         try {
 
             Document doc = Jsoup.connect(URL)
+                    // FIXME тут и далее - все strings в константы с понятными именами (что ищем?)
                     .userAgent("Chrome/4.0.249.0")
                     .get();
             doc.outputSettings().outline(true);
@@ -70,6 +74,7 @@ public class Parser {
         }
     }
 
+    // FIXME слишком общее имя, напр. parseVacancy() выглядит понятнее
     private void deepWork(String url) {
         Vacancy vacancy=new Vacancy();
         vacancy.setURL(url);
@@ -113,6 +118,8 @@ public class Parser {
             VACANCY_LIST.add(vacancy);
             System.out.println(vacancy);
         } catch (IOException e) {
+            // FIXME как насчет логирования?
+
             e.printStackTrace();
         }
 

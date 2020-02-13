@@ -15,6 +15,8 @@ public class Vacancy {
     private int salary;
     private String URL;
 
+    // FIXME enum лучше подойдет
+    // FIXME почему вакансия "знает" о всех SKILLS_REQUIRED? намек на плохой дизайн класса
     private HashMap<String,Boolean> SKILLS_REQUIRED =new HashMap<>();
          {
         SKILLS_REQUIRED.put("HIBERNATE",false);

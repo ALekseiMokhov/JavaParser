@@ -7,7 +7,7 @@ public class Vacancy_CRUD extends DaoFactory {
 
     @Override
     public void createTable() {
-        try{
+        try{// FIXME лучше использовать try-with-resources
             connection=getConnection();
             statement=connection.prepareStatement(CREATE_DB_VACANCIES);
             statement.execute();
@@ -36,6 +36,7 @@ public class Vacancy_CRUD extends DaoFactory {
 
     }
 
+    // FIXME метод ничего не возвращает и выглядит, как printData()
     @Override
     public void getData() {
         try{
@@ -87,9 +88,10 @@ public class Vacancy_CRUD extends DaoFactory {
 
     }
 
+    // FIXME метод ничего не возвращает и выглядит, как printSalariesGreaterThan(int salary)
     public void getData(int salary) {
 
-        try {
+        try {// FIXME лучше использовать try-with-resources
             connection = getConnection();
             statement = connection.prepareStatement("select*from vacancies where salary >= "+salary);
             resultSet = statement.executeQuery();
@@ -127,9 +129,11 @@ public class Vacancy_CRUD extends DaoFactory {
 
         }
     }
+
+    // FIXME опять несоотв. имя метода
     @Override
     public void deleteData(LocalDate date) {
-        try {
+        try {// FIXME лучше использовать try-with-resources
             connection=getConnection();
             statement=connection.
                     prepareStatement("delete from vacancies where"+date +" -postingDate >3");
@@ -158,6 +162,7 @@ public class Vacancy_CRUD extends DaoFactory {
 
     }
 
+    // FIXME опять несоотв. имя метода
     public void persistData(Vacancy vacancy){
         try {
             connection = getConnection();
@@ -172,6 +177,7 @@ public class Vacancy_CRUD extends DaoFactory {
             statement.setDate(6,vacancy.getDate());
             statement.executeUpdate();
 
+            // FIXME закоменченный код не должен находится в мастере
 
        /*
          statement=connection.prepareStatement("select * from skills limit 1");

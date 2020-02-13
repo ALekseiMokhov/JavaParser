@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//FIXME не вижу, где мы это используем, поэтому дальше не смотрю
 public class DAO_Util {
     @Desc(text = "utility methods")
     /*check correctness of sql syntax!*/

@@ -1,3 +1,7 @@
+//FIXME тут и далее по всему проекту (100% файлов)- не соблюдаешь java naming convention: пакеты, переменные, классы и тд
+// см примеры: https://www.oracle.com/technetwork/java/codeconventions-135099.html
+
+//FIXME тут и далее по всему проекту: плохой дизайн классов (в плане того, что он ООП, на что намекает слово static почти в каждом методе)
 package MAIN;
 import DAO.Vacancy_CRUD;
 

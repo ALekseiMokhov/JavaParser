@@ -20,6 +20,8 @@ public abstract class DaoFactory implements Dao{
     static String CREATE_DB_SKILLS;
 
 
+    // FIXME они = null по дефолту, незачем писать лишний/ненужный код
+    // FIXME зачем это здесь, если не используем?
     Connection connection=null;
     PreparedStatement statement=null;
     ResultSet resultSet=null;

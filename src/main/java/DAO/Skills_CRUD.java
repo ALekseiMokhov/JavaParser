@@ -12,6 +12,7 @@ public class Skills_CRUD extends DaoFactory{
     @Override
     public void createTable() {
         try{
+            // FIXME лучше использовать try-with-resources
             connection=getConnection();
             System.out.println("connection is successfull");
             statement=connection.prepareStatement(CREATE_DB_SKILLS);
