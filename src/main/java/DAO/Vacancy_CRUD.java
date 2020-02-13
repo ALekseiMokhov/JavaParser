@@ -171,25 +171,27 @@ public class Vacancy_CRUD extends DaoFactory {
             statement.setString(5,vacancy.getURL());
             statement.setDate(6,vacancy.getDate());
             statement.executeUpdate();
-            
-            statement=connection.prepareStatement("select * from skills limit 1");
-            resultSet = statement.executeQuery();
 
+
+       /*
+         statement=connection.prepareStatement("select * from skills limit 1");
+            ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
             statement=connection.prepareStatement("INSERT INTO skills values(" +
                     "default,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
             int countColumn = resultSetMetaData.getColumnCount();
-            for (int i = 2; i <= countColumn; i++ ) {
+            for (int i = 2; i < countColumn; i++ ) {
                 String name = resultSetMetaData.getColumnName(i);
-                if (vacancy.getSkillsRequired().get(name) == true) {
+                System.out.println(name.toUpperCase());
+
+                if(vacancy.getSkillsRequired().get(name.toUpperCase()) == true){
                     statement.setBoolean(i, true);
                 } else {
                     statement.setBoolean(i, false);
                 }
             }
+            System.out.println(vacancy.getSkillsRequired());
+            statement.executeUpdate();*/
             connection.commit();
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();

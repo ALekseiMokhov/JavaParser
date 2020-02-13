@@ -1,7 +1,5 @@
-package WEB;
-import DAO.Skills_CRUD;
+package MAIN;
 import DAO.Vacancy_CRUD;
-import MAIN.Vacancy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,10 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 
-public class WebParser {
+public class Parser {
     private static String URL;
     private static final List<Vacancy>VACANCY_LIST =new ArrayList<>();
-   /* private static final List<String>SKILLS_LIST=new ArrayList<>();*/
     final Properties properties = new Properties();
     InputStream inputStream = null;
 

@@ -1,18 +1,17 @@
 package MAIN;
-import DAO.Skills_CRUD;
 import DAO.Vacancy_CRUD;
-import WEB.WebParser;
-import java.util.List;
+
 public class HHparser {
 @Desc(text = " parse() [& save data] from hh.ru, retrieve data by calling read();")
 
     public static void main(String[] args) {
 
        parse();
+       read();
     }
     public static void parse(){
-        WebParser webparser = new WebParser();
-        webparser.work();
+        Parser parser = new Parser();
+        parser.work();
     }
     public static void read(){
         Vacancy_CRUD vacancy_crud= new Vacancy_CRUD();

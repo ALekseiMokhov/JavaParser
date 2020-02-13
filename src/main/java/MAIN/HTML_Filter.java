@@ -1,4 +1,4 @@
-package WEB;
+package MAIN;
 import MAIN.Vacancy;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ final class HTML_Filter {
             "Орел", "Брянск","Белгород","Минск",
             "Курск"});
     private final static List<String> SKILLS = Arrays.asList(new String[]{
-            "HIBERNATE","SPRING","JAVA 8","EJB","GENERICS","SQL","NOSQL","AJAX","CSS","HTML",
+            "HIBERNATE","SPRING","JAVA8","EJB","GENERICS","SQL","NOSQL","AJAX","CSS","HTML",
             "JUNIT","LOG4J","ORACLE","POSTGRES","MONGODB","CASSANDRA","CORE","UI"
     });
 

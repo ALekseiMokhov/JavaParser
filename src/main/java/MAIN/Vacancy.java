@@ -15,11 +15,12 @@ public class Vacancy {
     private int salary;
     private String URL;
 
-    private LinkedHashMap<String,Boolean> SKILLS_REQUIRED =new LinkedHashMap<>();
+    private HashMap<String,Boolean> SKILLS_REQUIRED =new HashMap<>();
          {
         SKILLS_REQUIRED.put("HIBERNATE",false);
         SKILLS_REQUIRED.put("SPRING",false);
-        SKILLS_REQUIRED.put("JAVA 8",false);
+        SKILLS_REQUIRED.put("JAVA8",false);
+        SKILLS_REQUIRED.put("JAVASCRIPT",false);
         SKILLS_REQUIRED.put("GENERICS",false);
         SKILLS_REQUIRED.put("SQL",false);
         SKILLS_REQUIRED.put("NOSQL",false);
