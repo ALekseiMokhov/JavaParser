@@ -1,4 +1,4 @@
-import MAIN.Vacancy;
+import com.gmail.alekseimokhov.javaparser.main.Vacancy;
 import org.junit.Test;
 
 import java.io.FileInputStream;

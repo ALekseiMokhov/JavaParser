@@ -1,13 +1,10 @@
-package DAO;
-
-import MAIN.Desc;
+package com.gmail.alekseimokhov.javaparser.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DAO_Util {
-    @Desc(text = "utility methods")
     /*check correctness of sql syntax!*/
     private static final  String REMOVE_DUPLICATES = "DELETE FROM vacancies v JOIN vacancies w " +
             "ON v.id<w.id " +

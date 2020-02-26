@@ -1,6 +1,4 @@
-package DAO;
-
-import MAIN.Vacancy;
+package com.gmail.alekseimokhov.javaparser.dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,22 +12,17 @@ public abstract class DaoFactory implements Dao{
     private static String URL;
     private static String USER;
     private static String PASSWORD;
-    private static  InputStream is;
     private static final Properties PROPERTIES = new Properties();
     static String CREATE_DB_VACANCIES;
     static String CREATE_DB_SKILLS;
 
-
-    Connection connection=null;
-    PreparedStatement statement=null;
-    ResultSet resultSet=null;
-
-
+    Connection connection;
+    PreparedStatement statement;
+    ResultSet resultSet;
 
     static {
-        try {
-            is = new FileInputStream("src/main/resources/properties.config");
-            PROPERTIES.load(is);
+        try(InputStream inputStream = new FileInputStream("src/main/resources/properties.config")) {
+            PROPERTIES.load(inputStream);
             USER = PROPERTIES.getProperty("DB_USER");
             PASSWORD = PROPERTIES.getProperty("DB_PASSWORD");
             URL=PROPERTIES.getProperty("DB_URL");
@@ -37,22 +30,11 @@ public abstract class DaoFactory implements Dao{
             CREATE_DB_VACANCIES=PROPERTIES.getProperty("CREATE_DB_VACANCIES");
             CREATE_DB_SKILLS=PROPERTIES.getProperty("CREATE_DB_SKILLS");
             Class.forName(DRIVER);
-            try{
-                is.close();
-            }
-            catch(IOException e){
-                System.out.println("Can't close inputstream!");
-            }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File properties.config hasn't been found! ");
+    } catch (FileNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Properties can't find your data!");
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
         }
     }
     static Connection getConnection() throws SQLException {

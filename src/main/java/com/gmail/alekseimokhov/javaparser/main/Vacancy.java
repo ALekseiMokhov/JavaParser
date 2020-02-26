@@ -1,4 +1,4 @@
-package MAIN;
+package com.gmail.alekseimokhov.javaparser.main;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;

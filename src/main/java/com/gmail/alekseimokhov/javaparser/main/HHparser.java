@@ -1,11 +1,11 @@
-package MAIN;
-import DAO.Vacancy_CRUD;
+package com.gmail.alekseimokhov.javaparser.main;
+import com.gmail.alekseimokhov.javaparser.dao.Vacancy_CRUD;
 
 public class HHparser {
-@Desc(text = " parse() [& save data] from hh.ru, retrieve data by calling read();")
 
     public static void main(String[] args) {
-
+        Vacancy_CRUD vacancy_crud = new Vacancy_CRUD();
+        vacancy_crud.createTable();
        parse();
        read();
     }
@@ -15,7 +15,7 @@ public class HHparser {
     }
     public static void read(){
         Vacancy_CRUD vacancy_crud= new Vacancy_CRUD();
-        vacancy_crud.getData();
+        vacancy_crud.printData();
     }
 
 

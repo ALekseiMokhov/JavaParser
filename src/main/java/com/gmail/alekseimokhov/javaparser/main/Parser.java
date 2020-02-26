@@ -1,5 +1,5 @@
-package MAIN;
-import DAO.Vacancy_CRUD;
+package com.gmail.alekseimokhov.javaparser.main;
+import com.gmail.alekseimokhov.javaparser.dao.Vacancy_CRUD;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
