@@ -1,4 +1,4 @@
-import com.gmail.alekseimokhov.javaparser.main.Vacancy;
+import com.gmail.alekseimokhov.javaparser.entity.Vacancy;
 import org.junit.Test;
 
 import java.io.FileInputStream;
@@ -29,8 +29,6 @@ public class Vacancy_CRUD_TEST {
             PASSWORD = PROPERTIES.getProperty("DB_PASSWORD");
             URL=PROPERTIES.getProperty("DB_URL");
             String DRIVER = PROPERTIES.getProperty("DB_DRIVER");
-            String CREATE_DB_VACANCIES = PROPERTIES.getProperty("CREATE_SQL");
-            String CREATE_DB_SKILLS = PROPERTIES.getProperty("CREATE_SQL2");
             Class.forName(DRIVER);
             System.out.println(USER);
             System.out.println(PASSWORD);
@@ -38,7 +36,7 @@ public class Vacancy_CRUD_TEST {
                 is.close();
             }
             catch(IOException e){
-                System.out.println("Can't close inputstream!");
+                System.out.println("Can't close Inputstream!");
             }
 
         } catch (FileNotFoundException e) {

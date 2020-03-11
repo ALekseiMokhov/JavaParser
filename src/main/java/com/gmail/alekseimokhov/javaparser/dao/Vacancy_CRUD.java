@@ -1,8 +1,8 @@
 package com.gmail.alekseimokhov.javaparser.dao;
-import com.gmail.alekseimokhov.javaparser.main.Vacancy;
+import com.gmail.alekseimokhov.javaparser.entity.Vacancy;
 import java.sql.*;
 import java.time.LocalDate;
-public class Vacancy_CRUD extends DaoFactory {
+public class Vacancy_CRUD extends DaoFactory<Vacancy> {
 
 
     @Override
@@ -20,7 +20,7 @@ public class Vacancy_CRUD extends DaoFactory {
     }
 
     @Override
-    public void printData() {
+    public void printAllData() {
         try(Connection connection=getConnection();
             PreparedStatement statement=connection.prepareStatement("select*from vacancies")){
             resultSet =statement.executeQuery();
@@ -44,7 +44,7 @@ public class Vacancy_CRUD extends DaoFactory {
         }
     }
 
-    public void printData(int salary) {
+    public void printVacancies(int salary) {
         try(Connection connection=getConnection();
             PreparedStatement  statement =
                     connection.prepareStatement("select*from vacancies where salary >= "+salary);
@@ -59,11 +59,11 @@ public class Vacancy_CRUD extends DaoFactory {
 
         }
     }
-    @Override
-    public void deleteData(LocalDate date) {
+
+    public void removeData(LocalDate date) {
         try(Connection connection=getConnection();
             PreparedStatement  statement =
-                    connection.prepareStatement("delete from vacancies where"+date +" - postingDate >3")) {
+                    connection.prepareStatement("delete from vacancies where"+date +" - postingDate >7")) {
             statement.executeQuery();
             connection.commit();
         } catch (SQLException e) {
@@ -72,10 +72,11 @@ public class Vacancy_CRUD extends DaoFactory {
 
     }
 
-    public void persistData(Vacancy vacancy){
+             @Override
+        public void saveData( Vacancy vacancy) {
         try (Connection connection=getConnection();
              PreparedStatement  statement =
-                     connection.prepareStatement("MERGE INTO vacancies KEY(url) VALUES(default,?,?,?,?,?,?) " )){
+                     connection.prepareStatement("INSERT INTO vacancies VALUES(default,?,?,?,?,?,?) " )){
             statement.setInt(1,vacancy.getSalary());
             statement.setInt(2,vacancy.getExperience());
             statement.setString(3,vacancy.getCompany());
@@ -88,12 +89,7 @@ public class Vacancy_CRUD extends DaoFactory {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Existing vacancy");
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+
         }
     }
 

@@ -1,9 +1,9 @@
-package com.gmail.alekseimokhov.javaparser.main;
+package com.gmail.alekseimokhov.javaparser.entity;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Vacancy {
 
@@ -15,32 +15,9 @@ public class Vacancy {
     private int salary;
     private String URL;
 
-    private HashMap<String,Boolean> SKILLS_REQUIRED =new HashMap<>();
-         {
-        SKILLS_REQUIRED.put("HIBERNATE",false);
-        SKILLS_REQUIRED.put("SPRING",false);
-        SKILLS_REQUIRED.put("JAVA8",false);
-        SKILLS_REQUIRED.put("JAVASCRIPT",false);
-        SKILLS_REQUIRED.put("GENERICS",false);
-        SKILLS_REQUIRED.put("SQL",false);
-        SKILLS_REQUIRED.put("NOSQL",false);
-        SKILLS_REQUIRED.put("UI",false);
-        SKILLS_REQUIRED.put("AJAX",false);
-        SKILLS_REQUIRED.put("CSS",false);
-        SKILLS_REQUIRED.put("HTML",false);
-        SKILLS_REQUIRED.put("JUNIT",false);
-        SKILLS_REQUIRED.put("LOG4J",false);
-        SKILLS_REQUIRED.put("EJB",false);
-        SKILLS_REQUIRED.put("ORACLE",false);
-        SKILLS_REQUIRED.put("POSTGRES",false);
-        SKILLS_REQUIRED.put("MONGODB",false);
-        SKILLS_REQUIRED.put("CASSANDRA",false);
-        SKILLS_REQUIRED.put("CORE",false);
-
-    }
+    private List<Skill> SKILLS_REQUIRED =new ArrayList<>();
 
     public Vacancy() {
-        this.ID = 0;
         this.date=Date.valueOf(LocalDate.now());
     }
 
@@ -102,17 +79,25 @@ public class Vacancy {
         this.URL = URL;
     }
 
-    public void setSkillsRequired(List<String> list){
-      for(String s: list){
-          if (SKILLS_REQUIRED.containsKey(s.toUpperCase())){
-              SKILLS_REQUIRED.replace(s.toUpperCase(),true);
-          }
-      }
-
+    public List<Skill> getSKILLS_REQUIRED() {
+        return SKILLS_REQUIRED;
     }
 
-    public HashMap<String, Boolean> getSkillsRequired() {
-        return SKILLS_REQUIRED;
+    public void setSKILLS_REQUIRED(List<Skill> SKILLS_REQUIRED) {
+        this.SKILLS_REQUIRED = SKILLS_REQUIRED;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vacancy vacancy = (Vacancy) o;
+        return Objects.equals(getURL(), vacancy.getURL());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getURL());
     }
 
     @Override
@@ -121,7 +106,7 @@ public class Vacancy {
                 "ID=" + ID +
                 ", city='" + city + '\'' +
                 ", company='" + company + '\'' +
-                ", expirience=" + experience +
+                ", experience=" + experience +
                 ", date=" + date +
                 ", salary=" + salary +
                 ", URL='" + URL + '\'' +

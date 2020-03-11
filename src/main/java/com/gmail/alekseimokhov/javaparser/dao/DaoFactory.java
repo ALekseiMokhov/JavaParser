@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public abstract class DaoFactory implements Dao{
+public abstract class DaoFactory<T> {
 
     private static String URL;
     private static String USER;
@@ -16,7 +16,6 @@ public abstract class DaoFactory implements Dao{
     static String CREATE_DB_VACANCIES;
     static String CREATE_DB_SKILLS;
 
-    Connection connection;
     PreparedStatement statement;
     ResultSet resultSet;
 
@@ -43,6 +42,11 @@ public abstract class DaoFactory implements Dao{
         return connection;
 
     }
+
+    abstract void createTable();
+    abstract void printAllData();
+    abstract void saveData(T t);
+
 
 
 }
