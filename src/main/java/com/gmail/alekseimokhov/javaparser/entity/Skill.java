@@ -1,11 +1,12 @@
 package com.gmail.alekseimokhov.javaparser.entity;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Skill {
     private String skillName;
-    private static final List<String>values = List.of("hibernate","spring","postgres","cassandra","junit","java 8"
-    ,"oracle","docker","javascript","java core","collections","concurrency");
+    private static final List<String>values = Arrays.asList(new String[] {"hibernate", "spring", "postgres", "cassandra", "junit", "java 8"
+            , "oracle", "docker", "javascript", "java core", "collections", "concurrency"} );
 
     public String getSkillName() {
         return skillName;
